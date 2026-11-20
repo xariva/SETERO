@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2f7ef">
+<title>Setero</title>
+<style>
+:root{--bg:#f2f7ef;--bg2:#e6f0e2;--card:#ffffff;--line:#dde9d8;--lime:#9ad3a6;--moss:#7fb88c;--txt:#23382b;--mut:#6f8a77;--red:#e5575b;--amber:#e39a4a;--dk:#2f7a4d}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%}
+body{background:linear-gradient(180deg,#e9f4e5 0,#f6faf3 320px) fixed;color:var(--txt);font:16px/1.45 -apple-system,"SF Pro Text","Segoe UI",Roboto,system-ui,sans-serif;padding-top:env(safe-area-inset-top,0)}
+header{padding:16px 18px 6px;display:flex;align-items:center;gap:10px}
+header h1{font-size:24px;margin:0;flex:1;font-weight:700;letter-spacing:-.4px;color:var(--dk)}
+.lg{background:#fff;border-radius:999px;padding:3px;box-shadow:0 2px 8px #3c64461a}
+.lg button{background:transparent;color:var(--mut);border:0;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:700}
+.lg button.on{background:var(--lime);color:#17402a}
+main{padding:6px 16px 110px;max-width:560px;margin:auto}
+.tabs{display:flex;gap:4px;margin:10px 0 16px;background:#fff;border-radius:16px;padding:4px;box-shadow:0 4px 14px #3c64461a}
+.tabs button{flex:1;padding:11px 4px;border:0;background:transparent;color:var(--mut);border-radius:12px;font-size:14px;font-weight:600}
+.tabs button.on{background:var(--lime);color:#17402a}
+.card{background:var(--card);border-radius:24px;padding:18px;margin-bottom:14px;box-shadow:0 10px 30px #3c64461a}
+.big{font-size:22px;font-weight:700;color:var(--dk);word-break:break-all;letter-spacing:-.3px}
+.mut{color:var(--mut);font-size:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.row>.b{flex:1;min-width:140px}
+button.b,a.b{background:linear-gradient(135deg,#a7dbb2,#86c795);color:#17402a;border:0;border-radius:16px;padding:14px;font-size:16px;font-weight:700;text-align:center;text-decoration:none;box-shadow:0 6px 16px #6fb98a55}
+button.w{background:linear-gradient(135deg,#ffe0b0,#f6c98a);box-shadow:0 6px 16px #e3a24a44;color:#5a3510}
+button.g,a.g{background:#f0f7ed;color:var(--dk);border:0;border-radius:14px;padding:10px 14px;font-size:14px;font-weight:600;text-decoration:none}
+button.d{background:#fdeeed;color:#b4373c;border:0;border-radius:14px;padding:10px 14px;font-size:14px;font-weight:600}
+input,textarea{width:100%;padding:13px 14px;border-radius:14px;border:1.5px solid transparent;background:#f1f7ee;color:var(--txt);font-size:16px;margin:4px 0 10px;font-family:inherit;outline:0}
+input:focus,textarea:focus{border-color:var(--lime);background:#fff}
+label{font-size:13px;color:var(--mut);font-weight:600}
+.compass{width:138px;height:138px;border-radius:50%;margin:8px auto;border:0;position:relative;background:radial-gradient(#fff,#e8f3e4);box-shadow:inset 0 0 0 6px #fff,0 8px 22px #3c64462a}
+.compass i{position:absolute;left:50%;top:50%;border-left:11px solid transparent;border-right:11px solid transparent;border-bottom:52px solid #5fae7a;transform-origin:50% 100%;margin:-52px 0 0 -11px;transition:transform .3s;border-radius:4px}
+.compass b{position:absolute;top:8px;left:50%;transform:translateX(-50%);font-size:12px;color:var(--amber)}
+.spot h3{margin:0 0 4px;font-size:17px}
+.spot img,#pimg{width:100%;max-height:170px;object-fit:cover;border-radius:16px;margin:8px 0}
+.warn{background:#fdf0ef;color:#8a3033;border-radius:14px;padding:11px 12px;font-size:13px;margin:10px 0}
+.ad{border:1.5px dashed #cfe0c9;border-radius:16px;text-align:center;padding:14px;color:var(--mut);font-size:13px}
+#sosBtn{position:fixed;right:14px;bottom:calc(16px + env(safe-area-inset-bottom,0));background:var(--red);color:#fff;border:0;border-radius:999px;padding:11px 16px;font-size:14px;font-weight:800;overflow:hidden;z-index:5;box-shadow:0 8px 20px #e5575b66}
+#fill{position:absolute;left:0;top:0;bottom:0;width:0;background:#ffffff66}
+#sosBtn span{position:relative}
+#ov,#md{position:fixed;inset:0;display:none;z-index:9}
+#ov{background:#c0393ef5;color:#fff;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;gap:12px}
+#ov.on,#md.on{display:flex}
+#ov h2{font-size:26px;margin:0}
+#cnt{font-size:90px;font-weight:800}
+#ov button{width:100%;max-width:340px;padding:15px;font-size:17px;border-radius:16px;border:0;font-weight:800}
+#md{background:#1f3a2a66;align-items:flex-end;justify-content:center}
+#md .card{width:100%;max-width:560px;max-height:92vh;overflow:auto;margin:0;border-radius:28px 28px 0 0}
+.toast{position:fixed;left:50%;top:64px;transform:translateX(-50%);background:#2f7a4d;color:#fff;padding:11px 18px;border-radius:999px;font-weight:600;display:none;z-index:20;max-width:90%;text-align:center;box-shadow:0 8px 20px #0003}
+[data-theme=dark]{--bg:#0f1a14;--bg2:#17261d;--card:#1a2b21;--line:#27402f;--lime:#7fc28f;--moss:#5fa070;--txt:#e6f1e8;--mut:#93ad9a;--dk:#8fd3a0;--amber:#e9a85a}
+[data-theme=dark] body{background:linear-gradient(180deg,#0d1812,#13221a 320px) fixed}
+[data-theme=dark] .lg,[data-theme=dark] .tabs{background:#1a2b21;box-shadow:none}
+[data-theme=dark] .card{box-shadow:0 10px 30px #0006}
+[data-theme=dark] input,[data-theme=dark] textarea{background:#12211a}
+[data-theme=dark] input:focus,[data-theme=dark] textarea:focus{background:#1a2b21}
+[data-theme=dark] button.g,[data-theme=dark] a.g{background:#223a2b;color:var(--dk)}
+[data-theme=dark] button.d{background:#3a2124;color:#ff9a9d}
+[data-theme=dark] .compass{background:radial-gradient(#1f3a2b,#12211a);box-shadow:inset 0 0 0 6px #1a2b21,0 8px 22px #0006}
+[data-theme=dark] .warn{background:#3a2124;color:#ffc9cb}
+[data-theme=dark] .ad{border-color:#2f4a38}
+[data-theme=dark] #md{background:#000a}
+.native #sosBtn{bottom:calc(78px + env(safe-area-inset-bottom,0))}.native main{padding-bottom:190px}.native .ad{display:none}
+</style>
+</head>
+<body>
+<header><span style="font-size:26px">🍄</span><h1>Setero</h1>
+<button class="g" id="thm" onclick="toggleTheme()" aria-label="Theme" style="padding:7px 11px;font-size:16px">🌙</button>
+<div class="lg"><button id="l_es" onclick="setL('es')">ES</button> <button id="l_ca" onclick="setL('ca')">CA</button> <button id="l_en" onclick="setL('en')">EN</button></div></header>
+<div class="toast" id="toast"></div>
+<main>
+<div class="tabs"><button id="t0" onclick="tab(0)" data-i="tHome"></button><button id="t1" onclick="tab(1)" data-i="tSites"></button><button id="t2" onclick="tab(2)" data-i="tSet"></button></div>
+
+<section id="v0">
+ <div class="card">
+  <div id="gOff"><button class="b" style="width:100%;font-size:18px" onclick="startGPS()" data-i="act"></button></div>
+  <div id="gOn" style="display:none">
+   <div class="mut" data-i="yourPos"></div>
+   <div class="big" id="coords"></div><div class="mut" id="acc"></div>
+   <div class="row" style="margin-top:10px">
+    <button class="b" onclick="markStart()" data-i="start"></button>
+    <button class="b w" onclick="openSave()" data-i="saveM"></button>
+   </div>
+  </div>
+ </div>
+ <div class="card" style="text-align:center">
+  <div class="compass"><b>N</b><i id="needle"></i></div>
+  <div class="big" id="tgtName"></div><div class="mut" id="tgtDist"></div>
+  <div class="row" style="justify-content:center;margin-top:8px"><button class="g" id="bBack" onclick="goStart()" data-i="back" style="display:none"></button></div>
+ </div>
+ <div class="card">
+  <b data-i="fallT"></b>
+  <div class="mut" style="margin:6px 0 10px" data-i="fallD"></div>
+  <button class="b" id="fallBtn" onclick="toggleFall()" style="width:100%"></button>
+  <div class="mut" id="fallState" style="margin-top:8px"></div>
+ </div>
+ <div class="ad">AdMob</div>
+</section>
+
+<section id="v1" style="display:none">
+ <div id="list"></div>
+ <div class="card"><b data-i="manual"></b>
+  <input id="mname" data-p="name">
+  <div class="row"><input id="mlat" inputmode="decimal" placeholder="41.0817" style="flex:1"><input id="mlng" inputmode="decimal" placeholder="0.9519" style="flex:1"></div>
+  <button class="b" onclick="addManual()" data-i="add" style="width:100%"></button></div>
+</section>
+
+<section id="v2" style="display:none">
+ <div class="card">
+  <label data-i="fam"></label><input id="fam" inputmode="tel" placeholder="+34…">
+  <label data-i="emg"></label><input id="emg" inputmode="tel" placeholder="112">
+  <label data-i="secs"></label><input id="secs" inputmode="numeric" placeholder="30">
+  <div style="display:none"><label data-i="api"></label><input id="api" placeholder="https://…workers.dev"></div>
+  <button class="b" onclick="saveSettings()" data-i="saveS" style="width:100%"></button>
+ </div>
+ <div class="card mut" data-i="nocov"></div>
+</section>
+</main>
+
+<button id="sosBtn" aria-label="SOS"><i id="fill"></i><span>🆘 SOS</span></button>
+
+<div id="md"><div class="card">
+ <h3 style="margin:0 0 6px" data-i="newM"></h3>
+ <div class="mut" data-i="coordsAuto"></div><div class="big" id="mc" style="font-size:19px"></div>
+ <label data-i="expl"></label><textarea id="mnote" rows="3"></textarea>
+ <input type="file" id="pf" accept="image/*" capture="environment" style="display:none" onchange="onPhoto(this)">
+ <img id="pimg" style="display:none">
+ <div class="row"><button class="g" onclick="$('pf').click()" data-i="photo"></button><button class="g" onclick="ident()" data-i="ident"></button></div>
+ <div id="aires" class="mut" style="white-space:pre-wrap;margin-top:8px"></div>
+ <div class="warn" data-i="disc"></div>
+ <div class="row"><button class="b" onclick="confirmSave()" data-i="save"></button><button class="g" onclick="$('md').className=''" data-i="cancel"></button></div>
+</div></div>
+
+<div id="ov">
+ <h2 id="ovT"></h2><div id="cnt"></div><div id="ovS"></div>
+ <button style="background:#fff;color:#a3292e" onclick="cancelSOS()" data-i="ok"></button>
+ <button style="background:#ffd24a;color:#4a1a00" onclick="fireSOS()" data-i="now"></button>
+</div>
+
+<script>
+/* Puente nativo: solo actúa dentro de la app instalada (Capacitor) */
+(function(){var C=window.Capacitor;if(!C||!C.isNativePlatform||!C.isNativePlatform())return;
+ document.addEventListener('DOMContentLoaded',function(){document.body.classList.add('native')});
+ var N=C.registerPlugin('SeteroNative');
+ window.SeteroNative={emergency:function(e,f,m){N.emergency({emergency:e,family:f,message:m})}};
+ /* AdMob: IDs de PRUEBA. Cámbialos por los tuyos antes de publicar (ver LEEME). */
+ var A=C.registerPlugin('AdMob');
+ function banner(){A.initialize({}).then(function(){return A.showBanner({adId:'ca-app-pub-3940256099942544/6300978111',adSize:'ADAPTIVE_BANNER',position:'BOTTOM_CENTER',margin:0,isTesting:true})}).catch(function(){})}
+ A.requestConsentInfo().then(function(i){if(i.isConsentFormAvailable&&i.status==='REQUIRED')return A.showConsentForm()}).then(banner).catch(banner);
+})();
+</script>
+<script>
+var T={
+es:{tHome:"Inicio",tSites:"Mis sitios",tSet:"Ajustes",act:"📡 Activar ubicación",yourPos:"Tu posición",start:"📍 Marcar inicio aquí",saveM:"🍄 Guardar setas",back:"↩ Volver al inicio",fallT:"Detección de caídas",fallD:"Si detecta una caída y no cancelas a tiempo, avisa a emergencias y a tu familiar con tu ubicación. Mantén la app abierta.",fallOn:"Desactivar detección",fallOff:"Activar detección",fallS1:"✅ Activa: vigilando caídas",fallS0:"Desactivada",nosensor:"No se recibe señal del sensor de movimiento. Prueba con la app instalada o con https.",newM:"Guardar setas",coordsAuto:"Coordenadas (automáticas)",expl:"Explicación",photo:"📷 Foto",ident:"🔎 Identificar (gratis)",freeT:"Identifica gratis con estas apps y comunidades. Seek (iNaturalist) usa la cámara; en iNaturalist y Mushroom Observer te pueden ayudar personas. Después, confírmalo siempre con un experto.",save:"Guardar",cancel:"Cancelar",analyzing:"Analizando…",aierr:"No se pudo consultar la IA.",noapi:"Pon la dirección del servidor de IA en Ajustes.",nophoto:"Haz primero una foto.",disc:"⚠ La IA puede equivocarse. NUNCA comas una seta porque lo diga la IA ni porque lo diga esta app: confírmala siempre con un micólogo experto o una sociedad micológica. Hay setas mortales muy parecidas a las comestibles.",manual:"Añadir sitio por coordenadas",name:"Nombre",add:"Añadir",empty:"Aún no tienes sitios guardados.",go:"Ir",map:"Mapa",del:"Borrar",confirmDel:"¿Borrar este sitio?",fam:"Teléfono de un familiar (con prefijo, ej. +34600111222)",emg:"Número de emergencias",secs:"Segundos para cancelar antes de avisar",api:"Dirección del servidor de IA",saveS:"Guardar ajustes",saved:"Guardado",nocov:"Sin cobertura móvil no salen la llamada ni el SMS. Avisa siempre a alguien de tu ruta.",gpsErr:"Activa el permiso de ubicación",wait:"Buscando señal GPS…",accu:"Precisión ±",nogps:"Aún sin señal GPS",startOk:"Inicio marcado",spotOk:"Setas guardadas 🍄",noTarget:"Sin destino",rot:" · gira el móvil",badC:"Coordenadas no válidas",ovFall:"Posible caída detectada",ovSOS:"Emergencia",ovSub:"Se avisará a emergencias y a tu familiar con tu ubicación",ok:"ESTOY BIEN · CANCELAR",now:"AVISAR AHORA",sms:"Ubicación lista: envía el SMS",call:"Llamar al ",startName:"Inicio",msg:"EMERGENCIA: necesito ayuda en el bosque. Mi ubicación: "},
+ca:{tHome:"Inici",tSites:"Els meus llocs",tSet:"Ajustos",act:"📡 Activar ubicació",yourPos:"La teva posició",start:"📍 Marcar inici aquí",saveM:"🍄 Desar bolets",back:"↩ Tornar a l’inici",fallT:"Detecció de caigudes",fallD:"Si detecta una caiguda i no ho cancel·les a temps, avisa emergències i el teu familiar amb la ubicació. Mantén l’app oberta.",fallOn:"Desactivar detecció",fallOff:"Activar detecció",fallS1:"✅ Activa: vigilant caigudes",fallS0:"Desactivada",nosensor:"No es rep senyal del sensor de moviment. Prova amb l’app instal·lada o amb https.",newM:"Desar bolets",coordsAuto:"Coordenades (automàtiques)",expl:"Explicació",photo:"📷 Foto",ident:"🔎 Identificar (gratis)",freeT:"Identifica gratis amb aquestes apps i comunitats. Seek (iNaturalist) usa la càmera; a iNaturalist i Mushroom Observer et poden ajudar persones. Després, confirma-ho sempre amb un expert.",save:"Desar",cancel:"Cancel·lar",analyzing:"Analitzant…",aierr:"No s’ha pogut consultar la IA.",noapi:"Posa l’adreça del servidor d’IA a Ajustos.",nophoto:"Fes primer una foto.",disc:"⚠ La IA pot equivocar-se. MAI mengis un bolet perquè ho digui la IA ni aquesta app: confirma’l sempre amb un micòleg expert o una societat micològica. Hi ha bolets mortals molt semblants als comestibles.",manual:"Afegir lloc per coordenades",name:"Nom",add:"Afegir",empty:"Encara no tens llocs desats.",go:"Anar",map:"Mapa",del:"Esborrar",confirmDel:"Esborrar aquest lloc?",fam:"Telèfon d’un familiar (amb prefix, ex. +34600111222)",emg:"Número d’emergències",secs:"Segons per cancel·lar abans d’avisar",api:"Adreça del servidor d’IA",saveS:"Desar ajustos",saved:"Desat",nocov:"Sense cobertura mòbil no surten ni la trucada ni el SMS. Avisa sempre algú de la teva ruta.",gpsErr:"Activa el permís d’ubicació",wait:"Cercant senyal GPS…",accu:"Precisió ±",nogps:"Encara sense senyal GPS",startOk:"Inici marcat",spotOk:"Bolets desats 🍄",noTarget:"Sense destí",rot:" · gira el mòbil",badC:"Coordenades no vàlides",ovFall:"Possible caiguda detectada",ovSOS:"Emergència",ovSub:"S’avisarà emergències i el teu familiar amb la ubicació",ok:"ESTIC BÉ · CANCEL·LAR",now:"AVISAR ARA",sms:"Ubicació llesta: envia el SMS",call:"Trucar al ",startName:"Inici",msg:"EMERGÈNCIA: necessito ajuda al bosc. La meva ubicació: "},
+en:{tHome:"Home",tSites:"My spots",tSet:"Settings",act:"📡 Enable location",yourPos:"Your position",start:"📍 Mark start here",saveM:"🍄 Save mushrooms",back:"↩ Back to start",fallT:"Fall detection",fallD:"If it detects a fall and you don’t cancel in time, it alerts emergency services and your relative with your location. Keep the app open.",fallOn:"Turn off detection",fallOff:"Turn on detection",fallS1:"✅ Active: watching for falls",fallS0:"Off",nosensor:"No motion sensor signal. Try the installed app or https.",newM:"Save mushrooms",coordsAuto:"Coordinates (automatic)",expl:"Description",photo:"📷 Photo",ident:"🔎 Identify (free)",freeT:"Identify for free with these apps and communities. Seek (iNaturalist) uses the camera; on iNaturalist and Mushroom Observer people can help you. Then always confirm with an expert.",save:"Save",cancel:"Cancel",analyzing:"Analysing…",aierr:"Could not reach the AI.",noapi:"Set the AI server address in Settings.",nophoto:"Take a photo first.",disc:"⚠ The AI can be wrong. NEVER eat a mushroom because the AI or this app says so: always have it confirmed by an expert mycologist or a mycological society. Deadly mushrooms look very similar to edible ones.",manual:"Add spot by coordinates",name:"Name",add:"Add",empty:"No saved spots yet.",go:"Go",map:"Map",del:"Delete",confirmDel:"Delete this spot?",fam:"Relative’s phone (with prefix, e.g. +34600111222)",emg:"Emergency number",secs:"Seconds to cancel before alerting",api:"AI server address",saveS:"Save settings",saved:"Saved",nocov:"Without mobile coverage neither the call nor the SMS will go out. Always tell someone your route.",gpsErr:"Allow location permission",wait:"Looking for GPS signal…",accu:"Accuracy ±",nogps:"No GPS signal yet",startOk:"Start marked",spotOk:"Mushrooms saved 🍄",noTarget:"No destination",rot:" · turn your phone",badC:"Invalid coordinates",ovFall:"Possible fall detected",ovSOS:"Emergency",ovSub:"Emergency services and your relative will be alerted with your location",ok:"I’M FINE · CANCEL",now:"ALERT NOW",sms:"Location ready: send the SMS",call:"Call ",startName:"Start",msg:"EMERGENCY: I need help in the forest. My location: "}};
+var L=(navigator.language||'es').slice(0,2);if(!T[L])L='es';
+var S={fam:'',emg:'112',secs:30,fall:0,api:'',lang:'',theme:''},spots=[],start=null,pos=null,target=null,heading=null,photo='',aiTxt='';
+function $(i){return document.getElementById(i)}
+function t(k){return T[L][k]||k}
+function applyL(){document.documentElement.lang=L;document.querySelectorAll('[data-i]').forEach(function(e){e.textContent=t(e.dataset.i)});document.querySelectorAll('[data-p]').forEach(function(e){e.placeholder=t(e.dataset.p)});['es','ca','en'].forEach(function(x){$('l_'+x).className=x==L?'on':''});fui();update();if(!pos)$('coords').textContent=t('wait');render()}
+function setL(x){L=x;S.lang=x;st();applyL()}
+function load(){try{var s=JSON.parse(localStorage.getItem('setero_s')||'null');if(s)S=Object.assign(S,s);spots=JSON.parse(localStorage.getItem('setero_p')||'[]');start=JSON.parse(localStorage.getItem('setero_i')||'null');if(S.lang&&T[S.lang])L=S.lang}catch(e){}}
+function st(){try{localStorage.setItem('setero_s',JSON.stringify(S));localStorage.setItem('setero_p',JSON.stringify(spots));localStorage.setItem('setero_i',JSON.stringify(start))}catch(e){toast('⚠ storage')}}
+function toast(x){var e=$('toast');e.textContent=x;e.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(function(){e.style.display='none'},2800)}
+function tab(n){for(var i=0;i<3;i++){$('v'+i).style.display=i==n?'block':'none';$('t'+i).className=i==n?'on':''}if(n==1)render();if(n==2)fillSet()}
+
+/* GPS */
+var gw=null;
+function startGPS(){if(!navigator.geolocation){toast(t('gpsErr'));return}
+ $('gOff').style.display='none';$('gOn').style.display='block';$('coords').textContent=t('wait');
+ if(gw!=null)return;
+ gw=navigator.geolocation.watchPosition(function(p){pos={lat:p.coords.latitude,lng:p.coords.longitude,acc:p.coords.accuracy};
+  $('coords').textContent=pos.lat.toFixed(5)+', '+pos.lng.toFixed(5);$('acc').textContent=t('accu')+Math.round(pos.acc)+' m';update()},
+  function(){gw=null;$('gOff').style.display='block';$('gOn').style.display='none';toast(t('gpsErr'))},
+  {enableHighAccuracy:true,maximumAge:2000,timeout:25000})}
+function dist(a,b,c,d){var R=6371000,r=Math.PI/180,x=(c-a)*r,y=(d-b)*r,h=Math.sin(x/2)*Math.sin(x/2)+Math.cos(a*r)*Math.cos(c*r)*Math.sin(y/2)*Math.sin(y/2);return 2*R*Math.asin(Math.sqrt(h))}
+function bearing(a,b,c,d){var r=Math.PI/180,y=Math.sin((d-b)*r)*Math.cos(c*r),x=Math.cos(a*r)*Math.sin(c*r)-Math.sin(a*r)*Math.cos(c*r)*Math.cos((d-b)*r);return(Math.atan2(y,x)/r+360)%360}
+function fmt(m){return m<1000?Math.round(m)+' m':(m/1000).toFixed(2)+' km'}
+function update(){$('bBack').style.display=start?'inline-block':'none';
+ if(!target){$('tgtName').textContent=t('noTarget');$('tgtDist').textContent='';return}
+ $('tgtName').textContent=target.name;if(!pos)return;
+ $('needle').style.transform='rotate('+(bearing(pos.lat,pos.lng,target.lat,target.lng)-(heading||0))+'deg)';
+ $('tgtDist').textContent=fmt(dist(pos.lat,pos.lng,target.lat,target.lng))+(heading==null?t('rot'):'');
+ if($('v1').style.display!='none')render()}
+addEventListener('deviceorientationabsolute',function(e){if(e.alpha!=null){heading=360-e.alpha;update()}},true);
+addEventListener('deviceorientation',function(e){if(e.webkitCompassHeading!=null){heading=e.webkitCompassHeading;update()}},true);
+function markStart(){if(!pos)return toast(t('nogps'));start={name:t('startName'),lat:pos.lat,lng:pos.lng};target=start;st();update();toast(t('startOk'))}
+function goStart(){target=start;update()}
+
+/* Setas */
+function openSave(){if(!pos)return toast(t('nogps'));$('mc').textContent=pos.lat.toFixed(6)+', '+pos.lng.toFixed(6);$('mnote').value='';photo='';aiTxt='';$('aires').textContent='';$('pimg').style.display='none';$('md').className='on';$('mnote').focus()}
+function confirmSave(){spots.push({id:Date.now(),name:$('mnote').value.trim()||'🍄 '+(spots.length+1),lat:pos.lat,lng:pos.lng,photo:photo,ai:aiTxt,d:new Date().toLocaleDateString(L)});st();$('md').className='';toast(t('spotOk'))}
+function onPhoto(f){var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var s=Math.min(1,800/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);photo=c.toDataURL('image/jpeg',.7);$('pimg').src=photo;$('pimg').style.display='block'};im.src=r.result};if(f.files[0])r.readAsDataURL(f.files[0])}
+var LK=['Seek|https://seek.inaturalist.org','iNaturalist|https://www.inaturalist.org','Mushroom Observer|https://mushroomobserver.org'].map(function(x){x=x.split('|');return '<a class="g" target="_blank" rel="noopener" href="'+x[1]+'">'+x[0]+'</a>'}).join(' ');
+function ident(){if(!S.api){$('aires').innerHTML=esc(t('freeT'))+'<br><br>'+LK;return}if(!photo)return toast(t('nophoto'));$('aires').textContent=t('analyzing');
+ fetch(S.api,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image:photo.split(',')[1],lang:L})}).then(function(r){return r.json()}).then(function(j){aiTxt=j.text||t('aierr');$('aires').textContent=aiTxt}).catch(function(){$('aires').textContent=t('aierr')})}
+function addManual(){var a=parseFloat(($('mlat').value||'').replace(',','.')),b=parseFloat(($('mlng').value||'').replace(',','.'));if(isNaN(a)||isNaN(b)||Math.abs(a)>90||Math.abs(b)>180)return toast(t('badC'));
+ spots.push({id:Date.now(),name:$('mname').value.trim()||'🍄 '+(spots.length+1),lat:a,lng:b,photo:'',ai:'',d:new Date().toLocaleDateString(L)});st();$('mname').value=$('mlat').value=$('mlng').value='';render()}
+function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function render(){var h=spots.length?'':'<div class="card mut">'+t('empty')+'</div>';
+ spots.forEach(function(s){h+='<div class="card spot"><h3>🍄 '+esc(s.name)+'</h3><div class="mut">'+s.lat.toFixed(5)+', '+s.lng.toFixed(5)+' · '+s.d+(pos?' · '+fmt(dist(pos.lat,pos.lng,s.lat,s.lng)):'')+'</div>'+(s.photo?'<img src="'+s.photo+'">':'')+(s.ai?'<div class="mut" style="white-space:pre-wrap">'+esc(s.ai)+'</div><div class="warn">'+t('disc')+'</div>':'')+
+ '<div class="row"><button class="b" onclick="goTo('+s.id+')">'+t('go')+'</button><a class="g" href="geo:'+s.lat+','+s.lng+'?q='+s.lat+','+s.lng+'">'+t('map')+'</a><button class="d" onclick="delS('+s.id+')">'+t('del')+'</button></div></div>'});$('list').innerHTML=h}
+function goTo(id){target=spots.find(function(s){return s.id==id});tab(0);update()}
+function delS(id){if(!confirm(t('confirmDel')))return;spots=spots.filter(function(s){return s.id!=id});if(target&&target.id==id)target=null;st();render();update()}
+
+/* Ajustes */
+function fillSet(){$('fam').value=S.fam;$('emg').value=S.emg;$('secs').value=S.secs;$('api').value=S.api}
+function saveSettings(){S.fam=$('fam').value.trim();S.emg=$('emg').value.trim()||'112';S.secs=Math.max(10,parseInt($('secs').value)||30);S.api=$('api').value.trim();st();toast(t('saved'))}
+
+/* Caídas */
+var seen=0,fr=0;
+function fui(){$('fallBtn').textContent=t(S.fall?'fallOn':'fallOff');$('fallState').textContent=t(S.fall?'fallS1':'fallS0')}
+function toggleFall(){if(S.fall){S.fall=0;st();fui();return}
+ function ok(){S.fall=1;seen=0;st();fui();try{navigator.wakeLock&&navigator.wakeLock.request('screen')}catch(e){}
+  setTimeout(function(){if(!seen&&S.fall){S.fall=0;st();fui();toast(t('nosensor'))}},2500)}
+ if(window.DeviceMotionEvent&&typeof DeviceMotionEvent.requestPermission==='function')DeviceMotionEvent.requestPermission().then(function(r){r=='granted'?ok():toast(t('nosensor'))}).catch(function(){toast(t('nosensor'))});else ok()}
+addEventListener('devicemotion',function(e){var a=e.accelerationIncludingGravity;if(!a||a.x==null)return;seen=1;if(!S.fall||$('ov').className=='on')return;
+ var m=Math.sqrt(a.x*a.x+a.y*a.y+a.z*a.z),n=Date.now();
+ if(m<4){if(!fr)fr=n}else{if(fr&&n-fr>80&&n-fr<1500&&m>20)alertSOS(1);fr=0}
+ if(m>40)alertSOS(1)},true);
+
+/* Emergencia */
+var tmr=null,left=0,ac=null;
+function alertSOS(fall){if($('ov').className=='on')return;$('ovT').textContent=t(fall?'ovFall':'ovSOS');$('ovS').textContent=t('ovSub');$('ov').className='on';left=fall?S.secs:5;$('cnt').textContent=left;beep();
+ tmr=setInterval(function(){left--;$('cnt').textContent=left;beep();if(navigator.vibrate)navigator.vibrate(400);if(left<=0)fireSOS()},1000)}
+function beep(){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;g.gain.value=.3;o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+.25)}catch(e){}}
+function cancelSOS(){clearInterval(tmr);$('ov').className='';fr=0;var x=$('ovX');if(x)x.remove()}
+function fireSOS(){clearInterval(tmr);var m=t('msg')+(pos?'https://maps.google.com/?q='+pos.lat.toFixed(6)+','+pos.lng.toFixed(6):'?');
+ if(window.SeteroNative&&window.SeteroNative.emergency){window.SeteroNative.emergency(S.emg,S.fam,m);$('ov').className='';return}
+ if(S.fam){location.href='sms:'+S.fam+'?&body='+encodeURIComponent(m);$('ovS').textContent=t('sms');
+  if(!$('ovX')){var b=document.createElement('button');b.id='ovX';b.style.cssText='background:#fff;color:#a3292e';b.textContent=t('call')+S.emg;b.onclick=function(){location.href='tel:'+S.emg;cancelSOS()};$('ov').appendChild(b)}}
+ else{location.href='tel:'+S.emg;setTimeout(cancelSOS,800)}}
+(function(){var b=$('sosBtn'),f=$('fill'),t0=0,r=null;
+ function go(e){e.preventDefault();t0=Date.now();r=setInterval(function(){var p=Math.min(1,(Date.now()-t0)/2000);f.style.width=p*100+'%';if(p>=1){en();alertSOS(0)}},30)}
+ function en(){clearInterval(r);f.style.width=0}
+ b.addEventListener('touchstart',go,{passive:false});b.addEventListener('mousedown',go);
+ ['touchend','touchcancel','mouseup','mouseleave'].forEach(function(n){b.addEventListener(n,en)})})();
+
+function applyTheme(){document.documentElement.dataset.theme=S.theme;$('thm').textContent=S.theme=='dark'?'☀️':'🌙';var m=document.querySelector('meta[name=theme-color]');if(m)m.content=S.theme=='dark'?'#0d1812':'#f2f7ef'}
+function toggleTheme(){S.theme=S.theme=='dark'?'light':'dark';st();applyTheme()}
+load();if(!S.theme)S.theme=(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';applyTheme();applyL();tab(0);
+</script>
+</body>
+</html>
