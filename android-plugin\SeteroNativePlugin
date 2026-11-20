@@ -1,0 +1,69 @@
+package com.setero.app;
+
+import android.Manifest;
+import android.content.Intent;
+import android.net.Uri;
+import android.telephony.SmsManager;
+import com.getcapacitor.JSObject;
+import com.getcapacitor.PermissionState;
+import com.getcapacitor.Plugin;
+import com.getcapacitor.PluginCall;
+import com.getcapacitor.PluginMethod;
+import com.getcapacitor.annotation.CapacitorPlugin;
+import com.getcapacitor.annotation.Permission;
+import com.getcapacitor.annotation.PermissionCallback;
+import java.util.ArrayList;
+
+@CapacitorPlugin(name = "SeteroNative", permissions = {
+    @Permission(alias = "sms", strings = { Manifest.permission.SEND_SMS }),
+    @Permission(alias = "call", strings = { Manifest.permission.CALL_PHONE })
+})
+public class SeteroNativePlugin extends Plugin {
+
+    @PluginMethod
+    public void emergency(PluginCall call) {
+        if (getPermissionState("sms") != PermissionState.GRANTED || getPermissionState("call") != PermissionState.GRANTED) {
+            requestAllPermissions(call, "permsDone");
+            return;
+        }
+        run(call);
+    }
+
+    @PermissionCallback
+    private void permsDone(PluginCall call) {
+        run(call);
+    }
+
+    private void run(PluginCall call) {
+        String num = call.getString("emergency", "112");
+        String fam = call.getString("family", "");
+        String msg = call.getString("message", "");
+        boolean smsOk = false;
+
+        if (fam != null && !fam.isEmpty()) {
+            if (getPermissionState("sms") == PermissionState.GRANTED) {
+                try {
+                    SmsManager sm = getContext().getSystemService(SmsManager.class);
+                    ArrayList<String> parts = sm.divideMessage(msg);
+                    sm.sendMultipartTextMessage(fam, null, parts, null, null);
+                    smsOk = true;
+                } catch (Exception e) { /* se usará el SMS manual */ }
+            }
+            if (!smsOk) {
+                Intent i = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + fam));
+                i.putExtra("sms_body", msg);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getContext().startActivity(i);
+            }
+        }
+
+        String action = getPermissionState("call") == PermissionState.GRANTED ? Intent.ACTION_CALL : Intent.ACTION_DIAL;
+        Intent c = new Intent(action, Uri.parse("tel:" + num));
+        c.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getContext().startActivity(c);
+
+        JSObject r = new JSObject();
+        r.put("sms", smsOk);
+        call.resolve(r);
+    }
+}
