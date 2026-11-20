@@ -1,0 +1,24 @@
+name: Construir app
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - run: npm install @capacitor/core @capacitor/cli @capacitor/android @capacitor-community/admob
+      - run: npx cap add android
+      - run: cp android-plugin/*.java android/app/src/main/java/com/setero/app/
+      - run: python3 patch_manifest.py
+      - run: npx cap sync android
+      - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: setero-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
